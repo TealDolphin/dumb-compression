@@ -6,6 +6,28 @@
   multi line comment
 */
 
+class leaf: public branch{
+    public:
+        leaf(int freq){
+            f = freq;
+            left = NULL;
+            right = NULL;
+        }
+};
+
+class branch{
+    int f;
+    branch *l;
+    branch *r;
+    public:
+        int frequency(){return f;};
+        branch(int freq);
+        void setLeft(branch *left){l = left}
+        void setRight(branch *right){r = right}
+        branch * getLeft(){return left;}
+        branch * getRight(){return right;}
+};
+
 // checks if two character pointer locations up to the null (strings) are equal, does not care about safety so it just goes as quick as possible.
 bool strEqu(char *one, char *two){
     // while they're both not null pointers
@@ -95,6 +117,49 @@ int fLen(char *f){
     return fileLen;
 }
 
+int [] buildArr(int bpl, char *filename, int filesize){
+    int []retval = calloc(2**(bpl*8), sizeof(int));
+    
+    
+    /*  #include "windows.h"
+        MEMORYSTATUSEX memInfo;
+        memInfo.dwLength = sizeof(MEMORYSTATUSEX);
+        GlobalMemoryStatusEx(&memInfo);
+        DWORDLONG avaliableMem = memInfo.ullAvailPageFile; // currently avaliable memory
+    */    
+    
+    if(filesize < avaliableMem){
+        // if it's smaller than the avaliable memory then just load the entire file into memory and go for it.
+        unsigned char byte = 0;
+        for(byte in file){ // todo, just psuedo-code for the idea
+            retval[byte]++
+        }
+    }else{
+        // read in one section at a time using ifstream;
+        unsigned char byte = 0;
+        /*  ifstream bigFile("mybigfile.dat");
+            constexpr size_t bufferSize = 1024 * 1024;
+            unique_ptr<char[]> buffer(new char[bufferSize]);
+            while (bigFile)
+            {
+                bigFile.read(buffer.get(), bufferSize);
+                // process data in buffer
+            }
+        */
+        // bufferSize = .8 * avaliableMem; ==> round to closest byte
+        
+        /*  
+            while(amountReadAlready + bufferSize < filesize){
+                //read to buffer then go through byte by byte
+                for(byte in buffer){
+                    retval[byte]++;
+                }
+            }
+        */
+    }
+    
+}
+
 void printHelp(int option){
     switch(option):
         case 0:
@@ -173,7 +238,7 @@ int main(int argc, char *argv[]){
             }
             int on = 1;
             for(int i = 0; i++; i<times){
-                int data[] = buildArr(on);// call the funtion that takes the bytes and bins them in sets of <argument>
+                int data[] = buildArr(on, filename);// call the funtion that takes the bytes and bins them in sets of <argument>
                 int d = sizeof(data);
                 
                 int *p = &data;
@@ -229,7 +294,7 @@ int main(int argc, char *argv[]){
     int fileLen = fLen(filename);
 
     // otherwise the file exists and we can try to compress it.
-    int data[] = buildArr(bpl);
+    int data[] = buildArr(bpl, filename);
     
     metadata(bitlist); // write [int](num of bytes used in encoding) and SHA256(file) to the front of the output file
     
