@@ -236,7 +236,7 @@ int main(int argc, char *argv[]){
     tree t = buildTree(bitlist, &data); // build the tree to be used for encoding/decoding
     //while file *f < f+fileLen
     //  read through byte by byte, writing the coded 'letters' to the bitlist
-    cap(bitlist, last); // cap the encoding with at least a bpl of 1's as all 1's are reserved for marking the end of the encoding by being invalid.
+    cap(bitlist, last); // cap the encoding such that it ends nicely, the end marker is built into the encode/decode tree as a minimum weight node.
    //printf("%s\n",func(3));
    return 0;
 }

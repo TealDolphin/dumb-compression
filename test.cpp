@@ -11,6 +11,8 @@ char * func(int var){
 }
 
 int main(int argc, char *argv[]){
-   printf("%s\n",func(3));
-   return 0;
+    printf("%f\n",743.2315135464544);
+    printf("%2f\n",743.2315135464544);
+    printf("%.2f\n",743.2315135464544);
+    return 0;
 }
